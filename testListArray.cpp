@@ -12,9 +12,13 @@ int main(){
     std::cout << std::endl; 
 
     list.insert(0, 0);
+    std::cout << "Insert OK" << std::endl;
     list.insert(1, 10);
+    std::cout << "Insert OK" << std::endl;
     list.insert(0, -5);
+    std::cout << "Insert OK" << std::endl;
     list.insert(2, 5);
+    std::cout << "Insert OK" << std::endl;
     std::cout << list << std::endl; 
     std::cout << "size(): " << list.size() << std::endl; 
     std::cout << "empty(): " << list.empty() << std::endl; 

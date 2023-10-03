@@ -41,15 +41,18 @@ class ListArray : public List<T>{
 			int i = 0;
 			out << "List [";
 				while(i < list.n){
-				out << " " << list.arr[i] << std::endl;
+				out << "\n" << " " << list.arr[i];
 				i++;
 			}
-			out << "]";
+			out << "\n" << "]" << std::endl;
 			return out;
 		}
 
 		void insert(int pos, T e) override{
-			if(pos >= 0 && pos < max){
+			if(pos >= 0 && pos <= n){
+				if(n == max){
+					resize(max*2);
+				}
 				for(int i=max; i>=pos; i--){
 					arr[i] = arr[i-1];
 				}
@@ -57,7 +60,6 @@ class ListArray : public List<T>{
 				n++;
 			}else{
 				throw std::out_of_range("La posición está fuera del array.");
-				resize(n+1);
 			}
 		}
 
@@ -83,15 +85,18 @@ class ListArray : public List<T>{
 		}
 
 		T get(int pos) override{
-			if(pos >= 0 && pos < n)
+			if(pos >= 0 && pos < n){
 				return arr[pos];
+			}else{
+				throw std::out_of_range("La posición está fuera del array.");
+			}
 		}
 
 		int search(T e) override{
 			int aux = -1;
 			for(int i = 0; i < n; i++){
 				if(arr[i] == e){
-					aux = e;
+					aux = i;
 					break;
 				}
 			}
