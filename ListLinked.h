@@ -19,9 +19,46 @@ class ListLinked : public List<T> {
 			first = aux;
 		}
 
-		T operator[](int pos);
-		friend std::ostream& operator<<(std::ostream &out, const ListLinked<T> &list);
-		void insert(int pos, T e);
+		T operator[](int pos){
+			Node<T>* aux = first;
+			if(pos >= 0 && pos <= n){
+				for(int i = 0; i < n; i++){
+					if(i = pos){
+						return aux->data;
+					}
+					aux = aux->next;
+				}
+			}else{
+				throw std::out_of_range("Posición fuera del array.");
+			}
+		}
+
+		friend std::ostream& operator<<(std::ostream &out, const ListLinked<T> &list){
+				out << "List [";
+				for(int i = 0; i < list.n; i++){
+					out << "\n" << list[i];
+				}
+				out << "]";
+				return out;
+		}
+
+		void insert(int pos, T e){
+			Node<T>* aux = first;
+			Node<T>* preaux = nullptr;
+			if(pos >= 0 && pos <= n){
+				for(int i = 0; i < pos; i++){
+					preaux = aux;
+					aux = aux->next;
+				}
+				preaux->next = new Node<T>;
+				preaux = preaux->next;
+				preaux->data = e;
+				preaux->next = aux;
+			}else{
+				throw std::out_of_range("Posición fuera del array.");
+			}
+		}
+
 		void append(T e);
 		void prepend(T e);
 		T remove(int pos);
