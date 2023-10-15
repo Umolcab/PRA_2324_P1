@@ -14,21 +14,19 @@ class ListLinked : public List<T> {
 		}
 
 		~ListLinked(){
-			Node<T>* aux = first->next;
-			delete first;
-			first = aux;
+			Node<T>* aux;
+			for(int i = 0; i < n; i++){
+				aux = first->next;
+				delete first;
+				first = aux;
+			}
+			n = 0;
 		}
 
 		T operator[](int pos){
 			Node<T>* aux = first;
 			if(pos >= 0 && pos <= n){
-				for(int i = 0; i < n; i++){
-					if(i = pos){
-						return aux->data;
-					}else{
-						aux = aux->next;
-					}
-				}
+				return get(pos);
 			}else{
 				throw std::out_of_range("Posición fuera del array.");
 			}
@@ -37,7 +35,7 @@ class ListLinked : public List<T> {
 		friend std::ostream& operator<<(std::ostream &out, const ListLinked<T> &list){
 			out << "List [";
 			for(int i = 0; i < list.n; i++){
-				out << "\n" << list.first[i];
+				out << " " << list.first[i];
 			}
 			out << "]";
 			return out;
@@ -47,14 +45,18 @@ class ListLinked : public List<T> {
 			Node<T>* aux = first;
 			Node<T>* preaux = nullptr;
 			if(pos >= 0 && pos <= n){
-				for(int i = 0; i < pos; i++){
-					preaux = aux;
-					aux = aux->next;
+				if(!pos){
+					first = new Node<T>(e);
+					first->next = aux;
+				}else{	
+					for(int i = 0; i < pos; i++){
+						preaux = aux;
+						aux = aux->next;
+					}
+					preaux->next = new Node<T>(e);
+					preaux = preaux->next;
+					preaux->next = aux;
 				}
-				preaux->next = new Node(e);
-				preaux = preaux->next;
-				preaux->data = e;
-				preaux->next = aux;
 				n++;
 			}else{
 				throw std::out_of_range("Posición fuera del array.");
@@ -72,12 +74,16 @@ class ListLinked : public List<T> {
 		T remove(int pos){
 			Node<T>* aux = first;
 			Node<T>* preaux = nullptr;
-			if(pos >= 0 && pos <= n){
-				for(int i = 0; i < pos; i++){
-					preaux = aux;
-					aux = aux->next;
+			if(pos >= 0 && pos < n){
+				if(!pos){
+					first = aux->next;
+				}else{
+					for(int i = 0; i < pos; i++){
+						preaux = aux;
+						aux = aux->next;
+					}
+					preaux->next = aux->next;
 				}
-				preaux->next = aux->next;
 				aux->next = nullptr;
 				n--;
 				return aux->data;
@@ -87,8 +93,12 @@ class ListLinked : public List<T> {
 		}
 
 		T get(int pos){
-                    	if(pos >= 0 && pos <= n){
-				return first[pos];
+			Node<T>* aux = first;
+                    	if(pos >= 0 && pos < n){
+				for(int i = 0; i < pos; i++){
+					aux = aux->next;
+				}
+				return aux->data;
 			}else{
 				throw std::out_of_range("Posición fuera del array.");
 			}
@@ -97,13 +107,12 @@ class ListLinked : public List<T> {
 		int search(T e){
 			Node<T>* aux = first;
 			int pos = -1;
-			T x;
                         for(int i = 0; i < n; i++){
-				x = aux[i];
-				if(e == x){
+				if(e == aux->data){
 					pos = i;
 					break;
 				}
+				aux = aux->next;
 			}
 			return pos;
 		}
