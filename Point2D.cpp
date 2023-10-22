@@ -11,6 +11,6 @@ bool operator!=(const Point2D &a, const Point2D &b){
 }
 
 std::ostream& operator<<(std::ostream &out, const Point2D &p){
-	out << "El punto tiene las coordenadas: (" << p.x << "," << p.y << ")" << std::endl;
+	out << "El punto tiene las coordenadas: (" << p.x << "," << p.y << ")";
 	return out;
 }
