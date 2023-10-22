@@ -33,11 +33,13 @@ class ListLinked : public List<T> {
 		}
 
 		friend std::ostream& operator<<(std::ostream &out, const ListLinked<T> &list){
+			Node<T>* aux = list.first;
 			out << "List [";
 			for(int i = 0; i < list.n; i++){
-				out << " " << list.first[i];
+				out << " " << aux->data;
+				aux = aux->next;
 			}
-			out << "]";
+			out << " ]";
 			return out;
 		}
 
