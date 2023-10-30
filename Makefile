@@ -29,5 +29,13 @@ bin/testCircle: testCircle.cpp Shape.o Circle.o Point2D.o
 	mkdir -p bin
 	g++ -o bin/testCircle testCircle.cpp Shape.o Circle.o Point2D.o
 
+Rectangle.o: Rectangle.h Rectangle.cpp
+	g++ -c Rectangle.cpp
+
+bin/testRectangle: testRectangle.cpp Shape.o Rectangle.o Point2D.o
+	g++ -c testRectangle.cpp
+	mkdir -p bin
+	g++ -o testRectangle testRectangle.cpp Shape.o Rectangle.o Point2D.o
+
 clean:
 	rm -r *.o *.gch bin

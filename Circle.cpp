@@ -9,7 +9,6 @@ Circle::Circle(){
 Circle::Circle(std::string color, Point2D center, double radius) : Shape(color){
 	this->center = center;
 	this->radius = radius;
-	set_color(color);
 }
 
 Point2D Circle::get_center() const{
